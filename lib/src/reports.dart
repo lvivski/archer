@@ -1,3 +1,5 @@
+part of archer;
+
 class Reporter {
   final bool verbose;
   
@@ -13,8 +15,12 @@ class Reporter {
   void testFail(Property<Object> p, Results rs) =>
     print("FAIL: '${p.name}' after ${rs.count()} check(s).\n");
   
-  void singleCheck(Result<Object> r) =>
-      r.result ? _success(r) : _fail(r);
+  void singleCheck(Result<Object> r) {
+    if (r.result != null) 
+      _success(r); 
+    else 
+      _fail(r);
+  }
       
   void summary(List<bool> rs) {
     var failed = rs.filter((r) => !r);
@@ -29,8 +35,11 @@ class Reporter {
   void _fail(Result<Object> r) =>
     print("\tFAILED for '${r.input.toString()}'");
   
-  void _success(Result<Object> r) =>
-      verbose ? print ("\tSUCCESS for '${r.input.toString()}'") : _skip();
+  void _success(Result<Object> r) {
+    if (verbose) {
+      print("\tSUCCESS for '${r.input.toString()}'"); 
+    }
+  }
+  
 }
 
-_skip() {}

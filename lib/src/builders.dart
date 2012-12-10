@@ -1,3 +1,5 @@
+part of archer;
+
 Int([int start = 0, int end = 42]) { 
     if (start <= end)
       return new ArbitraryInt(start, end + 1);
@@ -15,8 +17,7 @@ Arbitrary<Object> Single(Object o) => Choice([o]);
 Arbitrary<Object> CharRange(String a, String b) =>     
       Int(a.charCodeAt(0), b.charCodeAt(0)).passThrough((x) => new String.fromCharCodes([x]));
 
-interface ArbitraryBuilderMarker<T> {
-}
+abstract class ArbitraryBuilderMarker<T> {}
 
 class ArbitraryIntBuilder implements ArbitraryBuilderMarker<int> {
   int start = 0, end = 42;
@@ -68,7 +69,7 @@ class ArbitraryListBuilder implements ArbitraryBuilderMarker {
     return this;
   }
   
-  ForAllProxy get with() => new ForAllProxy(this);
+  ForAllProxy get with => new ForAllProxy(this);
   
   Arbitrary toArbitrary(iterator) {
     if (parent !== null) {
@@ -118,25 +119,25 @@ class ArbitraryChoiceBuilder implements ArbitraryBuilderMarker<Object> {
 }
 
 class ForAll {
-  static ArbitraryIntBuilder get integers() =>
+  static ArbitraryIntBuilder get integers =>
       new ArbitraryIntBuilder();
   
-  static ArbitraryIntBuilder get positiveIntegers() => 
+  static ArbitraryIntBuilder get positiveIntegers => 
       integers.greaterThan(0);
   
-  static ArbitraryIntBuilder get negativeIntegers() =>
+  static ArbitraryIntBuilder get negativeIntegers =>
       integers.lessThan(0).greaterThan(-42);
   
-  static ArbitraryIntBuilder get nonNegativeIntegers() =>
+  static ArbitraryIntBuilder get nonNegativeIntegers =>
       integers.greaterOrEqual(0);
   
-  static ArbitraryIntBuilder get nonPositiveIntegers() =>
+  static ArbitraryIntBuilder get nonPositiveIntegers =>
       integers.lessOrEqual(0).greaterThan(-42);
   
-  static ArbitraryListBuilder get lists() =>
+  static ArbitraryListBuilder get lists =>
       new ArbitraryListBuilder();
   
-  static ArbitraryCharBuilder get chars() =>
+  static ArbitraryCharBuilder get chars =>
       new ArbitraryCharBuilder();
   
   static ArbitraryChoiceBuilder objectsIn(elements) =>
@@ -148,7 +149,7 @@ class ForAllProxy {
   
   ForAllProxy(this.parent);
   
-  get integers() {
+  get integers {
     if(parent !== null) {
       return new ArbitraryIntBuilder.withParent(parent);
     } else {
@@ -156,7 +157,7 @@ class ForAllProxy {
     }
   }
   
-  get lists() {
+  get lists {
     if (parent !== null) {
       return new ArbitraryListBuilder.withParent(parent);
     } else {
@@ -164,7 +165,7 @@ class ForAllProxy {
     }
   }
   
-  get chars() {
+  get chars {
     if (parent !== null) {
       return new ArbitraryCharBuilder.withParent(parent);
     } else {
@@ -175,16 +176,16 @@ class ForAllProxy {
   ArbitraryChoiceBuilder objectsIn(elements) =>
     new ArbitraryChoiceBuilder(elements, parent);
   
-  ArbitraryIntBuilder get positiveIntegers() => 
+  ArbitraryIntBuilder get positiveIntegers => 
       integers.greaterThan(0);
   
-  ArbitraryIntBuilder get negativeIntegers() =>
+  ArbitraryIntBuilder get negativeIntegers =>
       integers.lessThan(0).greaterThan(-42);
   
-  ArbitraryIntBuilder get nonNegativeIntegers() =>
+  ArbitraryIntBuilder get nonNegativeIntegers =>
       integers.greaterOrEqual(0);
   
-  ArbitraryIntBuilder get nonPositiveIntegers() =>
+  ArbitraryIntBuilder get nonPositiveIntegers =>
       integers.lessOrEqual(0).greaterThan(-42);
   
   

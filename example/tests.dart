@@ -1,4 +1,4 @@
-#import("qc.dart");
+import 'package:archer/archer.dart';
 
 main () {
   property("any int over 5", ForAll.positiveIntegers.greaterThan(5), (x) => x > 5);

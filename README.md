@@ -1,10 +1,6 @@
-Dart QuickCheck
-===============
-
-Abstract
---------
-'Dart QuickCheck' (or simply _qc_) is a set of hacks developed in a try to port Haskell Quickcheck to Dart language. Abandon all hope you, who want to actually use it for a real project.
-There are no plans to maintain or support it.
+Archer
+======
+Quickcheck inspired testing tool for Dart
 
 For more info on QuickCheck and property based tetsing read [Wikipedia Article](http://en.wikipedia.org/wiki/QuickCheck)
 
@@ -36,10 +32,10 @@ listsEqual(L1, L2) {
 }
 ```
 
-And then, after very annoying couple of minutes we can actulay test our function:
+And then:
 
 ```dart
-#import("qc.dart");
+#import("package:archer/archer.dart");
 
 main() {
   property("reverse of reverse of list should equal to initial list",
@@ -49,9 +45,9 @@ main() {
 }
 ```
 
-You can also ask _qc_ to output all inputs it passes to function by calling `beVerbose()` function. For example:
+You can also ask Archer to output all inputs it passes to function by calling `beVerbose()` function. For example:
 ```dart
-#import("qc.dart");
+#import("package:archer/archer.dart");
 
 main() {
   property("reverse of reverse of list should equal initial list",
@@ -84,7 +80,7 @@ SUCCESS: tested 1 properties.
 
 For more examples take a look at our extensive set of tests for qc itself :)
 ```dart
-#import("qc.dart");
+#import("package:archer/archer.dart");
 
 main () {
   property("any int over 5", ForAll.positiveIntegers.greaterThan(5), (x) => x > 5);

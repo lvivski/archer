@@ -1,8 +1,9 @@
-interface Arbitrary<T> extends Iterator<T> {
-}
+part of archer;
+
+abstract class Arbitrary<T> extends Iterator<T> {}
 
 abstract class BasicArbitrary<T> implements Arbitrary<T> {
-  bool hasNext() => true;
+  bool get hasNext => true;
   Arbitrary<Object> passThrough(f) => new PassThroughArbitrary<T>(this, f);
 }
 

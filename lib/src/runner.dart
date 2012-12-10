@@ -1,3 +1,5 @@
+part of archer;
+
 prepareArbitrary(g) {
   if (g is ArbitraryBuilderMarker)
     return g.toArbitrary();
@@ -39,8 +41,8 @@ class Config {
       report = new Reporter(_verbose);
   }
   
-  int get numRuns() => _numRuns;
-  bool get verbose() => _verbose;
+  int get numRuns => _numRuns;
+  bool get verbose => _verbose;
   
   static bool setVerbose(bool flag) => _verbose = flag;
 }
