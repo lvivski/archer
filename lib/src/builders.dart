@@ -6,6 +6,9 @@ Int([int start = 0, int end = 42]) {
     else
       return new ArbitraryInt(end, start + 1);
 }
+
+Bool() => new ArbitraryBool();
+
 Arbitrary<List<Object>> ListOf(Iterator<Object> g, [minLength, maxLength]) =>
     new ArbitraryList<Object>(g, minLength, maxLength);
 
@@ -48,6 +51,21 @@ class ArbitraryIntBuilder implements ArbitraryBuilderMarker<int> {
       return parent.toArbitrary(Int(start, end));
     } else {
       return Int(start, end);
+    }
+  }
+}
+
+class ArbitraryBoolBuilder implements ArbitraryBuilderMarker<int> {
+  var parent;
+  
+  ArbitraryBoolBuilder();
+  ArbitraryBoolBuilder.withParent(this.parent);
+  
+  Arbitrary<Object> toArbitrary() {
+    if(parent !== null) {
+      return parent.toArbitrary(Bool());
+    } else {
+      return Bool();
     }
   }
 }
@@ -119,6 +137,9 @@ class ArbitraryChoiceBuilder implements ArbitraryBuilderMarker<Object> {
 }
 
 class ForAll {
+  static ArbitraryBoolBuilder get bools =>
+      new ArbitraryBoolBuilder();
+  
   static ArbitraryIntBuilder get integers =>
       new ArbitraryIntBuilder();
   
@@ -170,6 +191,14 @@ class ForAllProxy {
       return new ArbitraryCharBuilder.withParent(parent);
     } else {
       return ForAll.chars;
+    }
+  }
+  
+  get bools {
+    if (parent !== null) {
+      return new ArbitraryBoolBuilder.withParent(parent);
+    } else {
+      return ForAll.bools;
     }
   }
   

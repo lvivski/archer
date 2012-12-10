@@ -104,7 +104,7 @@ class Results {
   
   int count() => _results.length;
   
-  Result<Object> latest() => _results.last();
+  Result<Object> latest() => _results.last;
 }
 
 class Property<T> {
@@ -154,7 +154,7 @@ class Property<T> {
 }
 
 abstract class Condition {
-  abstract bool check(bool r);
+  bool check(bool r);
 }
 
 class AcceptPositive extends Condition {

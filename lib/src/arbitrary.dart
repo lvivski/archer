@@ -38,6 +38,11 @@ class ArbitraryInt extends BasicArbitrary<int> {
   int next() => randomInRange(start, end);
 }
 
+class ArbitraryBool extends BasicArbitrary<bool> {
+  ArbitraryBool();
+  bool next() => randomBool();
+}
+
 class ArbitraryChoice<T> extends BasicArbitrary<T> {
   final List<T> elements;
   ArbitraryChoice(List<T> this.elements);

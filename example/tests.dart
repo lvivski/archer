@@ -16,6 +16,10 @@ main () {
   property("lists of positive integers", ForAll.lists.with.positiveIntegers, 
     (x) => x is List && x.every((e) => e >= 0)
   );
+  
+  property("lists of booleans", ForAll.bools, 
+      (x) => x == true || x == false
+  );
 
   property("lists of list of integers", ForAll.lists.with.lists.with.positiveIntegers, 
     (x) => x is List && x.every((e) => e is List)
