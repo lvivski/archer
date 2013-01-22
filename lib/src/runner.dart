@@ -21,8 +21,6 @@ void checkAll() {
   run(Property.declaredProperties);
   Property.declaredProperties = null;
 }
-//checkFails(name, generator, callable) =>
-    //new Property.negative(name, prepareArbitrary(generator), callable);
 
 void run(List<Property<Object>> ps) {
   final config = new Config();
@@ -130,7 +128,7 @@ class Property<T> {
   }
   
   Result<T> check() {
-    final T input = _takeWhile(_filter, _generator.next);
+    final T input = _takeWhile(_filter, _generator.current);
     
     final bool checkResult = _callable(input);
     final bool result = _condition.check(checkResult);
@@ -144,10 +142,10 @@ class Property<T> {
   
   _takeWhile(condition, f) {
     // TODO: Report if too much tries.
-    var r = f();
+    var r = f;
     if (condition == null) return r;
     while (! condition(r)) {
-      r = f();
+      r = f;
     }
     return r;
   }

@@ -47,7 +47,7 @@ class ArbitraryIntBuilder implements ArbitraryBuilderMarker<int> {
   }
   
   Arbitrary<Object> toArbitrary() {
-    if(parent !== null) {
+    if(parent != null) {
       return parent.toArbitrary(Int(start, end));
     } else {
       return Int(start, end);
@@ -62,7 +62,7 @@ class ArbitraryBoolBuilder implements ArbitraryBuilderMarker<int> {
   ArbitraryBoolBuilder.withParent(this.parent);
   
   Arbitrary<Object> toArbitrary() {
-    if(parent !== null) {
+    if(parent != null) {
       return parent.toArbitrary(Bool());
     } else {
       return Bool();
@@ -79,7 +79,7 @@ class ArbitraryListBuilder implements ArbitraryBuilderMarker {
   ArbitraryListBuilder.withParent(this.parent);
   
   ArbitraryListBuilder ofLength(int min, [int max]) {
-    if (max === null) {
+    if (max == null) {
       max = min;
     }
     this.minLength = min;
@@ -87,10 +87,10 @@ class ArbitraryListBuilder implements ArbitraryBuilderMarker {
     return this;
   }
   
-  ForAllProxy get with => new ForAllProxy(this);
+  ForAllProxy get of => new ForAllProxy(this);
   
   Arbitrary toArbitrary(iterator) {
-    if (parent !== null) {
+    if (parent != null) {
       return parent.toArbitrary(ListOf(iterator, minLength, maxLength));
     } else {
       return ListOf(iterator, minLength, maxLength);
@@ -113,7 +113,7 @@ class ArbitraryCharBuilder implements ArbitraryBuilderMarker<String> {
   }
   
   Arbitrary toArbitrary() {
-    if (parent !== null) {
+    if (parent != null) {
       return parent.toArbitrary(CharRange(rangeStart, rangeEnd));
     } else {
       return CharRange(rangeStart, rangeEnd);
@@ -128,7 +128,7 @@ class ArbitraryChoiceBuilder implements ArbitraryBuilderMarker<Object> {
   ArbitraryChoiceBuilder(this.elements, [this.parent = null]);
   
   Arbitrary toArbitrary() {
-    if (parent !== null) {
+    if (parent != null) {
       return parent.toArbitrary(Choice(elements));
     } else {
       return Choice(elements);
@@ -171,7 +171,7 @@ class ForAllProxy {
   ForAllProxy(this.parent);
   
   get integers {
-    if(parent !== null) {
+    if(parent != null) {
       return new ArbitraryIntBuilder.withParent(parent);
     } else {
       return ForAll.integers;
@@ -179,7 +179,7 @@ class ForAllProxy {
   }
   
   get lists {
-    if (parent !== null) {
+    if (parent != null) {
       return new ArbitraryListBuilder.withParent(parent);
     } else {
       return ForAll.lists;
@@ -187,7 +187,7 @@ class ForAllProxy {
   }
   
   get chars {
-    if (parent !== null) {
+    if (parent != null) {
       return new ArbitraryCharBuilder.withParent(parent);
     } else {
       return ForAll.chars;
@@ -195,7 +195,7 @@ class ForAllProxy {
   }
   
   get bools {
-    if (parent !== null) {
+    if (parent != null) {
       return new ArbitraryBoolBuilder.withParent(parent);
     } else {
       return ForAll.bools;

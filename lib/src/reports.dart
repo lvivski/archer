@@ -23,7 +23,7 @@ class Reporter {
   }
       
   void summary(List<bool> rs) {
-    var failed = rs.filter((r) => !r);
+    var failed = rs.where((r) => !r);
     int numFailed = failed.length;
     if (numFailed > 0) {
       print ("\nFAILURE: ${numFailed} test(s) failed!");

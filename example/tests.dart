@@ -13,7 +13,7 @@ main () {
   property("chars", ForAll.chars, (x) => x is String);
   property("chars in range", ForAll.chars.ofRange('A','F'), (x) => "ABCDEF".indexOf(x) != -1);
   
-  property("lists of positive integers", ForAll.lists.with.positiveIntegers, 
+  property("lists of positive integers", ForAll.lists.of.positiveIntegers, 
     (x) => x is List && x.every((e) => e >= 0)
   );
   
@@ -21,15 +21,15 @@ main () {
       (x) => x == true || x == false
   );
 
-  property("lists of list of integers", ForAll.lists.with.lists.with.positiveIntegers, 
+  property("lists of list of integers", ForAll.lists.of.lists.of.positiveIntegers, 
     (x) => x is List && x.every((e) => e is List)
   );
   
-  property("lists of length", ForAll.lists.ofLength(3).with.integers.between(1, 3), 
+  property("lists of length", ForAll.lists.ofLength(3).of.integers.between(1, 3), 
     (xs) => xs.length == 3);
   
   property("choice", ForAll.objectsIn([1, "a"]), (x) => x == 1 || x == "a");
-  property("list of choice", ForAll.lists.with.objectsIn([1, "a"]), 
+  property("list of choice", ForAll.lists.of.objectsIn([1, "a"]), 
     (xs) => xs.every((x) => x == 1 || x == "a")
   );
   checkAll();

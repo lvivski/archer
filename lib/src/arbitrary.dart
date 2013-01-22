@@ -3,7 +3,9 @@ part of archer;
 abstract class Arbitrary<T> extends Iterator<T> {}
 
 abstract class BasicArbitrary<T> implements Arbitrary<T> {
-  bool get hasNext => true;
+  bool moveNext() => true;
+  T get current => next();
+  T next();
   Arbitrary<Object> passThrough(f) => new PassThroughArbitrary<T>(this, f);
 }
 
@@ -13,7 +15,7 @@ class PassThroughArbitrary<T> extends BasicArbitrary<Object> {
   final MapFunction f;
   final Arbitrary<T> g;
   PassThroughArbitrary(Arbitrary<T> this.g, MapFunction this.f);
-  Object next() => f(g.next());
+  Object next() => f(g.current);
 }
 
 class ArbitraryList<T> extends BasicArbitrary<List<T>> {
@@ -22,11 +24,12 @@ class ArbitraryList<T> extends BasicArbitrary<List<T>> {
   
   ArbitraryList(this.g, [this.minLen = 0, this.maxLen = 42]);
   
+  List<T> get current => next();
   List<T> next() {
     int len = randomInRange(minLen, maxLen);
     List<T> list = new List<T>();
     for (int i = 0; i < len; ++i) {
-      list.add(g.next());
+      list.add(g.current);
     }
     return list;
   }

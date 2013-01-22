@@ -1,6 +1,7 @@
 Archer
 ======
 Quickcheck inspired testing tool for Dart
+[![](https://drone.io/lvivski/archer/status.png)](https://drone.io/lvivski/archer/latest)
 
 For more info on QuickCheck and property based tetsing read [Wikipedia Article](http://en.wikipedia.org/wiki/QuickCheck)
 
@@ -35,11 +36,11 @@ listsEqual(L1, L2) {
 And then:
 
 ```dart
-#import("package:archer/archer.dart");
+import "package:archer/archer.dart";
 
 main() {
   property("reverse of reverse of list should equal to initial list",
-    ForAll.lists.with.integers,
+    ForAll.lists.of.integers,
     (xs) => listsEqual(xs, reverse(reverse(xs))));
   checkAll();
 }
@@ -47,11 +48,11 @@ main() {
 
 You can also ask Archer to output all inputs it passes to function by calling `beVerbose()` function. For example:
 ```dart
-#import("package:archer/archer.dart");
+import "package:archer/archer.dart";
 
 main() {
   property("reverse of reverse of list should equal initial list",
-    ForAll.lists.with.integers,
+    ForAll.lists.of.integers,
     (xs) => listsEqual(xs, reverse(reverse(xs))));
   
   beVerbose();
@@ -63,13 +64,13 @@ will result in (output is truncated):
 Testing property: 'reverse of reverse of list should equal initial list'
   SUCCESS for '[]'
   SUCCESS for '[36, 42, 21, 29, 33, 16, 8, 4, 2, 1, 0, 0, 0, 0, 24, 12, 6, 21, 10, 5, 2, 1, 0]'
-	SUCCESS for '[29, 33, 16, 8, 23, 11, 5, 2, 1, 24, 36, 42, 40, 38, 38, 37, 37, 37, 37, 18]'
-	SUCCESS for '[4, 2, 25, 36, 42, 40, 38, 19, 9]'
-	SUCCESS for '[26, 13, 6, 3]'
-	SUCCESS for '[12, 30, 34, 41, 20, 10, 5, 2, 1, 0, 0, 24, 36, 42, 21, 29, 33, 40, 20, 10, 23, 36, 42, 39, 19]'
-	SUCCESS for '[23, 36, 18, 27, 13, 31, 34, 41, 39]'
-	SUCCESS for '[9, 4, 2, 25, 36, 42, 40, 20, 10, 23, 36, 42, 21, 29, 33, 16, 27, 32, 16]'
-	SUCCESS for '[13, 6, 22, 35, 17, 27, 13, 31, 34, 41, 20, 29, 33, 40, 20, 29, 33, 16, 27, 32, 40, 20, 10, 5, 2, 1]'
+  SUCCESS for '[29, 33, 16, 8, 23, 11, 5, 2, 1, 24, 36, 42, 40, 38, 38, 37, 37, 37, 37, 18]'
+  SUCCESS for '[4, 2, 25, 36, 42, 40, 38, 19, 9]'
+  SUCCESS for '[26, 13, 6, 3]'
+  SUCCESS for '[12, 30, 34, 41, 20, 10, 5, 2, 1, 0, 0, 24, 36, 42, 21, 29, 33, 40, 20, 10, 23, 36, 42, 39, 19]'
+  SUCCESS for '[23, 36, 18, 27, 13, 31, 34, 41, 39]'
+  SUCCESS for '[9, 4, 2, 25, 36, 42, 40, 20, 10, 23, 36, 42, 21, 29, 33, 16, 27, 32, 16]'
+  SUCCESS for '[13, 6, 22, 35, 17, 27, 13, 31, 34, 41, 20, 29, 33, 40, 20, 29, 33, 16, 27, 32, 40, 20, 10, 5, 2, 1]'
   ...
 
 SUCCESS: tested 1 properties.
@@ -95,19 +96,19 @@ main () {
   property("chars", ForAll.chars, (x) => x is String);
   property("chars in range", ForAll.chars.ofRange('A','F'), (x) => "ABCDEF".indexOf(x) != -1);
   
-  property("lists of positive integers", ForAll.lists.with.positiveIntegers, 
+  property("lists of positive integers", ForAll.lists.of.positiveIntegers, 
     (x) => x is List && x.every((e) => e >= 0)
   );
 
-  property("lists of list of integers", ForAll.lists.with.lists.with.positiveIntegers, 
+  property("lists of list of integers", ForAll.lists.of.lists.of.positiveIntegers, 
     (x) => x is List && x.every((e) => e is List)
   );
   
-  property("lists of length", ForAll.lists.ofLength(3).with.integers.between(1, 3), 
+  property("lists of length", ForAll.lists.ofLength(3).of.integers.between(1, 3), 
     (xs) => xs.length == 3);
   
   property("choice", ForAll.objectsIn([1, "a"]), (x) => x == 1 || x == "a");
-  property("list of choice", ForAll.lists.with.objectsIn([1, "a"]), 
+  property("list of choice", ForAll.lists.of.objectsIn([1, "a"]), 
     (xs) => xs.every((x) => x == 1 || x == "a")
   );
   checkAll();
