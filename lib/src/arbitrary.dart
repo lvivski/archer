@@ -21,9 +21,9 @@ class PassThroughArbitrary<T> extends BasicArbitrary<Object> {
 class ArbitraryList<T> extends BasicArbitrary<List<T>> {
   final Iterator<T> g;
   final int minLen, maxLen;
-  
+
   ArbitraryList(this.g, [this.minLen = 0, this.maxLen = 42]);
-  
+
   List<T> get current => next();
   List<T> next() {
     int len = randomInRange(minLen, maxLen);
