@@ -4,8 +4,7 @@ abstract class Arbitrary<T> extends Iterator<T> {}
 
 abstract class BasicArbitrary<T> implements Arbitrary<T> {
   bool moveNext() => true;
-  T get current => next();
-  T next();
+  T get current;
   Arbitrary<Object> passThrough(f) => new PassThroughArbitrary<T>(this, f);
 }
 
@@ -15,7 +14,7 @@ class PassThroughArbitrary<T> extends BasicArbitrary<Object> {
   final MapFunction f;
   final Arbitrary<T> g;
   PassThroughArbitrary(Arbitrary<T> this.g, MapFunction this.f);
-  Object next() => f(g.current);
+  Object get current => f(g.current);
 }
 
 class ArbitraryList<T> extends BasicArbitrary<List<T>> {
@@ -24,8 +23,7 @@ class ArbitraryList<T> extends BasicArbitrary<List<T>> {
 
   ArbitraryList(this.g, [this.minLen = 0, this.maxLen = 42]);
 
-  List<T> get current => next();
-  List<T> next() {
+  List<T> get current {
     int len = randomInRange(minLen, maxLen);
     List<T> list = new List<T>();
     for (int i = 0; i < len; ++i) {
@@ -38,16 +36,16 @@ class ArbitraryList<T> extends BasicArbitrary<List<T>> {
 class ArbitraryInt extends BasicArbitrary<int> {
   final int start, end;
   ArbitraryInt(int this.start, int this.end);
-  int next() => randomInRange(start, end);
+  int get current => randomInRange(start, end);
 }
 
 class ArbitraryBool extends BasicArbitrary<bool> {
   ArbitraryBool();
-  bool next() => randomBool();
+  bool get current => randomBool();
 }
 
 class ArbitraryChoice<T> extends BasicArbitrary<T> {
   final List<T> elements;
   ArbitraryChoice(List<T> this.elements);
-  T next() => elements[randomInRange(0, elements.length)];
+  T get current => elements[randomInRange(0, elements.length)];
 }
