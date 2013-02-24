@@ -19,7 +19,7 @@ Arbitrary<Object> Choice(List<Object> elements) =>
 Arbitrary<Object> Single(Object o) => Choice([o]);
 
 Arbitrary<Object> CharRange(String a, String b) =>
-      Int(a.charCodeAt(0), b.charCodeAt(0)).passThrough((x) => new String.fromCharCodes([x]));
+      Int(a.codeUnitAt(0), b.codeUnitAt(0)).passThrough((x) => new String.fromCharCodes([x]));
 
 abstract class ArbitraryBuilderMarker<T> {
   Arbitrary<T> toArbitrary([iterator]);
